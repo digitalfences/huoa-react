@@ -1,14 +1,25 @@
 import axios from 'axios';
 
-import { GET_PAGES, MODAL_OPEN, MODAL_CLOSE } from './actionTypes';
+import { GET_PAGES, GET_HEROS, MODAL_OPEN, MODAL_CLOSE } from './actionTypes';
 
-const api = 'https://dev.huoa.org/wp-json';
+const API = 'https://dev.huoa.org/wp-json';
+const PRODUCTION = 'https://huoa-dev.netlify.app/';
 
 export const getPages = () => async (dispatch) => {
-  const response = await axios.get(`${api}/wp/v2/pages?page=1&per_page=100`);
-  const data = response.data.reduce((allData, { slug, title, acf }) => ({ ...allData, [slug]: { title: title.rendered, ...acf }}), {});
+  if (document.location.origin !== PRODUCTION) {
+    const response = await axios.get(`${API}/wp/v2/pages?page=1&per_page=100`);
+    const data = response.data.reduce((allData, { slug, title, acf }) => ({ ...allData, [slug]: { title: title.rendered, ...acf }}), {});
 
-  dispatch({ type: GET_PAGES, payload: data });
+    dispatch({ type: GET_PAGES, payload: data });
+  }
+};
+
+export const getHeros = () => async (dispatch) => {
+  if (document.location.origin !== PRODUCTION) {
+    const { data } = await axios.get(`${API}/wp/v2/heros?page=1&per_page=100`);
+
+    dispatch({ type: GET_HEROS, payload: data });
+  }
 };
 
 export const openModal = (modalContent) => {
