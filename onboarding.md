@@ -167,3 +167,23 @@ Essentially git rebase is very similar to git merge, but instead of grabbing all
 SO with git rebase, when an individual conflict arises, the rebase will pause, throw an error and show where the conflict is located in your code. Then open your code editor, fix the error, commit that fix, and then continue the rebase process.
 
 If you don't have much experience with git rebase, ask a fellow engineer and we will help out.
+
+### Rebasing Steps
+Make sure that everything you need to commit on your local branch is pushed up to your remote branch. 
+
+Do a `git status` just to check.
+
+Now switch to the main branch, or whatever branch you need to rebase with. Let’s assume it’s main. 
+
+`git checkout main`
+
+Now pull the remote updates from main.
+
+`git pull origin main`
+
+You should see the updates coming in from your terminal. 
+
+Now that you have the updates from the remote main branch, switch back to your local feature branch. 
+
+`git checkout [feature branch]`
+
